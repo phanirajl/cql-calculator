@@ -10,7 +10,7 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
-func generateFromCQL(cqlString string) {
+func generateFromCQL(fileName, cqlString string) {
 	b := bytes.NewReader([]byte(cqlString))
 	p := cql.NewParser(b)
 	r, err := p.Parse()
@@ -20,7 +20,7 @@ func generateFromCQL(cqlString string) {
 
 	m := Metadata{Name: r.TableName}
 
-	fmt.Print("Enter rows count: ")
+	fmt.Print("Enter rows count per one partition: ")
 	var i int
 	_, err = fmt.Scanf("%d", &i)
 	if err != nil {
@@ -54,7 +54,7 @@ func generateFromCQL(cqlString string) {
 		panic(err)
 	}
 
-	err = ioutil.WriteFile("generated.yaml", data, 0755)
+	err = ioutil.WriteFile(fileName, data, 0755)
 	if err != nil {
 		panic(err)
 	}
