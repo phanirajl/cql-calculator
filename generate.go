@@ -18,6 +18,10 @@ func generateFromCQL(fileName, cqlString string) {
 		panic(err)
 	}
 
+	if len(r.PK) == 0 {
+		panic("There no partition keys")
+	}
+
 	m := Metadata{Name: r.TableName}
 
 	fmt.Print("Enter rows count per one partition: ")
